@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	x := truecolor.Text("Hello, World!").Foreground(186, 218, 85).Underline()
-	fmt.Println(x)
+	badass := truecolor.Foreground(186, 218, 85)
+	fmt.Println(badass.Text("Hello, World!"))
 }

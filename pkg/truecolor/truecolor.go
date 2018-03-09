@@ -21,6 +21,17 @@ type Message struct {
 	underline     bool
 }
 
+func Foreground(r, g, b int) *Message {
+	return &Message{
+		hasForeground: true,
+		fg: Color{
+			r: r,
+			g: g,
+			b: b,
+		},
+	}
+}
+
 func (m *Message) Foreground(r, g, b int) *Message {
 	m.hasForeground = true
 	m.fg = Color{r, g, b}
@@ -42,6 +53,11 @@ func Text(text string) *Message {
 	return &Message{
 		text: text,
 	}
+}
+
+func (m *Message) Text(text string) *Message {
+	m.text = text
+	return m
 }
 
 func (m *Message) String() string {
