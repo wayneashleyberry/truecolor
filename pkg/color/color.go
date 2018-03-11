@@ -123,43 +123,43 @@ func (m *Message) Printf(format string, a ...interface{}) {
 
 // String will return the formatted text, with ansii excape codes, as a string
 func (m *Message) String() string {
+	var open []string
+	var close []string
+
+	if m.hasForeground {
+		open = append(open, fmt.Sprintf("\u001B[38;2;%d;%d;%dm", m.fg.R, m.fg.G, m.fg.B))
+		close = append(close, "\u001B[39m")
+	}
+
+	if m.hasBackground {
+		open = append(open, fmt.Sprintf("\u001B[48;2;%d;%d;%dm", m.bg.R, m.bg.G, m.bg.B))
+		close = append(close, "\u001B[49m")
+	}
+
+	if m.isUnderlined {
+		open = append(open, "\u001B[4m")
+		close = append(close, "\u001B[24m")
+	}
+
+	if m.isDim {
+		open = append(open, "\u001B[2m")
+		close = append(close, "\u001B[22m")
+	}
+
+	if m.isItalic {
+		open = append(open, "\u001B[3m")
+		close = append(close, "\u001B[23m")
+	}
+
+	if m.isBold {
+		open = append(open, "\u001B[1m")
+		close = append(close, "\u001B[21m")
+	}
+
 	var b strings.Builder
-	if m.hasForeground {
-		fmt.Fprintf(&b, "\u001B[38;2;%d;%d;%dm", m.fg.R, m.fg.G, m.fg.B)
-	}
-	if m.hasBackground {
-		fmt.Fprintf(&b, "\u001B[48;2;%d;%d;%dm", m.bg.R, m.bg.G, m.bg.B)
-	}
-	if m.isUnderlined {
-		fmt.Fprintf(&b, "\u001B[4m")
-	}
-	if m.isDim {
-		fmt.Fprintf(&b, "\u001B[2m")
-	}
-	if m.isItalic {
-		fmt.Fprintf(&b, "\u001B[3m")
-	}
-	if m.isBold {
-		fmt.Fprintf(&b, "\u001B[1m")
-	}
-	fmt.Fprintf(&b, "%s", m.text)
-	if m.isBold {
-		fmt.Fprintf(&b, "\u001B[21m")
-	}
-	if m.isItalic {
-		fmt.Fprintf(&b, "\u001B[23m")
-	}
-	if m.isDim {
-		fmt.Fprintf(&b, "\u001B[22m")
-	}
-	if m.isUnderlined {
-		fmt.Fprintf(&b, "\u001B[24m")
-	}
-	if m.hasBackground {
-		fmt.Fprintf(&b, "%s", "\u001B[49m")
-	}
-	if m.hasForeground {
-		fmt.Fprintf(&b, "%s", "\u001B[39m")
-	}
+	fmt.Fprint(&b, strings.Join(open, ""))
+	fmt.Fprint(&b, m.text)
+	fmt.Fprint(&b, strings.Join(close, ""))
+
 	return b.String()
 }
