@@ -2,19 +2,16 @@ package color
 
 import (
 	"fmt"
+	"image/color"
 	"strings"
 )
 
 const closeFgColor = "\u001B[39m"
 const closeBgColor = "\u001B[49m"
 
-type Color struct {
-	r, g, b int
-}
-
 type Message struct {
-	fg            Color
-	bg            Color
+	fg            color.RGBA
+	bg            color.RGBA
 	text          string
 	hasForeground bool
 	hasBackground bool
@@ -24,50 +21,47 @@ type Message struct {
 	isBold        bool
 }
 
-func Foreground(r, g, b int) *Message {
+func Foreground(r, g, b uint8) *Message {
 	return &Message{
 		hasForeground: true,
-		fg: Color{
-			r: r,
-			g: g,
-			b: b,
+		fg: color.RGBA{
+			R: r,
+			G: g,
+			B: b,
+			A: 0,
 		},
 	}
 }
 
-func Background(r, g, b int) *Message {
+func Background(r, g, b uint8) *Message {
 	return &Message{
 		hasBackground: true,
-		bg: Color{
-			r: r,
-			g: g,
-			b: b,
-		},
+		bg:            color.RGBA{r, g, b, 0},
 	}
 }
 
 func White() *Message {
 	return &Message{
 		hasForeground: true,
-		fg:            Color{255, 255, 255},
+		fg:            color.RGBA{255, 255, 255, 0},
 	}
 }
 
 func Black() *Message {
 	return &Message{
 		hasForeground: true,
-		fg:            Color{0, 0, 0},
+		fg:            color.RGBA{0, 0, 0, 0},
 	}
 }
 
-func (m *Message) Foreground(r, g, b int) *Message {
+func (m *Message) Foreground(r, g, b uint8) *Message {
 	m.hasForeground = true
-	m.fg = Color{r, g, b}
+	m.fg = color.RGBA{r, g, b, 0}
 	return m
 }
 
-func (m *Message) Background(r, g, b int) *Message {
-	m.bg = Color{r, g, b}
+func (m *Message) Background(r, g, b uint8) *Message {
+	m.bg = color.RGBA{r, g, b, 0}
 	m.hasBackground = true
 	return m
 }
@@ -117,10 +111,10 @@ func (m *Message) String() string {
 	var b strings.Builder
 	mod := 38
 	if m.hasForeground {
-		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod, m.fg.r, m.fg.g, m.fg.b)
+		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod, m.fg.R, m.fg.G, m.fg.B)
 	}
 	if m.hasBackground {
-		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod+10, m.bg.r, m.bg.g, m.bg.b)
+		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod+10, m.bg.R, m.bg.G, m.bg.B)
 	}
 	if m.isUnderlined {
 		fmt.Fprintf(&b, "\u001B[4m")
