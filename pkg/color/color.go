@@ -8,13 +8,13 @@ import (
 const closeFgColor = "\u001B[39m"
 const closeBgColor = "\u001B[49m"
 
-type color struct {
+type Color struct {
 	r, g, b int
 }
 
-type message struct {
-	fg            color
-	bg            color
+type Message struct {
+	fg            Color
+	bg            Color
 	text          string
 	hasForeground bool
 	hasBackground bool
@@ -24,10 +24,10 @@ type message struct {
 	isBold        bool
 }
 
-func Foreground(r, g, b int) *message {
-	return &message{
+func Foreground(r, g, b int) *Message {
+	return &Message{
 		hasForeground: true,
-		fg: color{
+		fg: Color{
 			r: r,
 			g: g,
 			b: b,
@@ -35,10 +35,10 @@ func Foreground(r, g, b int) *message {
 	}
 }
 
-func Background(r, g, b int) *message {
-	return &message{
+func Background(r, g, b int) *Message {
+	return &Message{
 		hasBackground: true,
-		bg: color{
+		bg: Color{
 			r: r,
 			g: g,
 			b: b,
@@ -46,74 +46,74 @@ func Background(r, g, b int) *message {
 	}
 }
 
-func White() *message {
-	return &message{
+func White() *Message {
+	return &Message{
 		hasForeground: true,
-		fg:            color{255, 255, 255},
+		fg:            Color{255, 255, 255},
 	}
 }
 
-func Black() *message {
-	return &message{
+func Black() *Message {
+	return &Message{
 		hasForeground: true,
-		fg:            color{0, 0, 0},
+		fg:            Color{0, 0, 0},
 	}
 }
 
-func (m *message) Foreground(r, g, b int) *message {
+func (m *Message) Foreground(r, g, b int) *Message {
 	m.hasForeground = true
-	m.fg = color{r, g, b}
+	m.fg = Color{r, g, b}
 	return m
 }
 
-func (m *message) Background(r, g, b int) *message {
-	m.bg = color{r, g, b}
+func (m *Message) Background(r, g, b int) *Message {
+	m.bg = Color{r, g, b}
 	m.hasBackground = true
 	return m
 }
 
-func (m *message) Underline() *message {
+func (m *Message) Underline() *Message {
 	m.isUnderlined = true
 	return m
 }
 
-func (m *message) Dim() *message {
+func (m *Message) Dim() *Message {
 	m.isDim = true
 	return m
 }
 
-func (m *message) Italic() *message {
+func (m *Message) Italic() *Message {
 	m.isItalic = true
 	return m
 }
 
-func (m *message) Bold() *message {
+func (m *Message) Bold() *Message {
 	m.isBold = true
 	return m
 }
 
-func Text(text string) *message {
-	return &message{
+func Text(text string) *Message {
+	return &Message{
 		text: text,
 	}
 }
 
-func (m *message) Print(text string) {
+func (m *Message) Print(text string) {
 	m.text = text
 	fmt.Print(m)
 }
 
-func (m *message) Println(text string) {
+func (m *Message) Println(text string) {
 	m.text = text
 	fmt.Println(m)
 }
 
-func (m *message) Printf(format string, a ...interface{}) {
+func (m *Message) Printf(format string, a ...interface{}) {
 	m.text = fmt.Sprintf(format, a...)
 	fmt.Print(m)
 }
 
-func (m *message) String() string {
+func (m *Message) String() string {
 	var b strings.Builder
 	mod := 38
 	if m.hasForeground {
