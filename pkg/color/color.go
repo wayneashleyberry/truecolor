@@ -106,6 +106,12 @@ func (m *Message) Print(text string) {
 	fmt.Print(m)
 }
 
+// Sprint will print the formatted text, like fmt.Print
+func (m *Message) Sprint(a ...interface{}) string {
+	m.text = fmt.Sprint(a...)
+	return fmt.Sprint(m)
+}
+
 // Println will print the formatted text, like fmt.Println
 func (m *Message) Println(text string) {
 	m.text = text
@@ -116,12 +122,6 @@ func (m *Message) Println(text string) {
 func (m *Message) Printf(format string, a ...interface{}) {
 	m.text = fmt.Sprintf(format, a...)
 	fmt.Print(m)
-}
-
-// Sprintf will print the formatted text, like fmt.Sprintf
-func (m *Message) Sprintf(format string, a ...interface{}) string {
-	m.text = fmt.Sprintf(format, a...)
-	return fmt.Sprint(m)
 }
 
 // String will return the formatted text, with ansii excape codes, as a string
