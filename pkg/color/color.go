@@ -1,6 +1,6 @@
 // Package color provides methods for printing 24-bit truecolor in your terminal.
 //
-// Not all terminals support 24-bit color, see https://gist.github.com/XVilka/8346728 for more.
+// Not all terminals support 24-bit color, see https://git.io/vxe0J for more.
 package color
 
 import (
