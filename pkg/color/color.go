@@ -1,4 +1,4 @@
-package truecolor
+package color
 
 import (
 	"fmt"

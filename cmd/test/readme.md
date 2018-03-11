@@ -1,6 +1,9 @@
+```go
 package main
 
-import "github.com/wayneashleyberry/truecolor/pkg/color"
+import (
+	"github.com/wayneashleyberry/truecolor/pkg/color"
+)
 
 func main() {
 	color.Foreground(186, 218, 85).Println("#bada55")
@@ -11,3 +14,4 @@ func main() {
 	color.White().Bold().Println("bold")
 	color.Foreground(255, 165, 00).Printf("Hello, %s!", "World")
 }
+```
