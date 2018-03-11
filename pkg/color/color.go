@@ -118,6 +118,12 @@ func (m *Message) Printf(format string, a ...interface{}) {
 	fmt.Print(m)
 }
 
+// Sprintf will print the formatted text, like fmt.Sprintf
+func (m *Message) Sprintf(format string, a ...interface{}) string {
+	m.text = fmt.Sprintf(format, a...)
+	return fmt.Sprint(m)
+}
+
 // String will return the formatted text, with ansii excape codes, as a string
 func (m *Message) String() string {
 	var b strings.Builder
