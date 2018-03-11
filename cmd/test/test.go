@@ -1,12 +1,15 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/wayneashleyberry/truecolor/pkg/truecolor"
 )
 
 func main() {
-	badass := truecolor.Foreground(186, 218, 85)
-	fmt.Println(badass.Text("Hello, World!"))
+	truecolor.Foreground(186, 218, 85).Println("#bada55")
+	truecolor.Black().Background(186, 218, 85).Println("#bada55")
+	truecolor.White().Underline().Print("underline\n")
+	truecolor.White().Dim().Println("dim")
+	truecolor.White().Italic().Println("italic")
+	truecolor.White().Bold().Println("bold")
+	truecolor.Foreground(255, 165, 00).Printf("Hello, %s!", "World")
 }

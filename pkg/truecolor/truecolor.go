@@ -14,11 +14,14 @@ type Color struct {
 
 type Message struct {
 	fg            Color
-	hasForeground bool
 	bg            Color
-	hasBackground bool
 	text          string
-	underline     bool
+	hasForeground bool
+	hasBackground bool
+	isUnderlined  bool
+	isItalic      bool
+	isDim         bool
+	isBold        bool
 }
 
 func Foreground(r, g, b int) *Message {
@@ -29,6 +32,31 @@ func Foreground(r, g, b int) *Message {
 			g: g,
 			b: b,
 		},
+	}
+}
+
+func Background(r, g, b int) *Message {
+	return &Message{
+		hasBackground: true,
+		bg: Color{
+			r: r,
+			g: g,
+			b: b,
+		},
+	}
+}
+
+func White() *Message {
+	return &Message{
+		hasForeground: true,
+		fg:            Color{255, 255, 255},
+	}
+}
+
+func Black() *Message {
+	return &Message{
+		hasForeground: true,
+		fg:            Color{0, 0, 0},
 	}
 }
 
@@ -45,7 +73,22 @@ func (m *Message) Background(r, g, b int) *Message {
 }
 
 func (m *Message) Underline() *Message {
-	m.underline = true
+	m.isUnderlined = true
+	return m
+}
+
+func (m *Message) Dim() *Message {
+	m.isDim = true
+	return m
+}
+
+func (m *Message) Italic() *Message {
+	m.isItalic = true
+	return m
+}
+
+func (m *Message) Bold() *Message {
+	m.isBold = true
 	return m
 }
 
@@ -55,9 +98,19 @@ func Text(text string) *Message {
 	}
 }
 
-func (m *Message) Text(text string) *Message {
+func (m *Message) Print(text string) {
 	m.text = text
-	return m
+	fmt.Print(m)
+}
+
+func (m *Message) Println(text string) {
+	m.text = text
+	fmt.Println(m)
+}
+
+func (m *Message) Printf(format string, a ...interface{}) {
+	m.text = fmt.Sprintf(format, a...)
+	fmt.Print(m)
 }
 
 func (m *Message) String() string {
@@ -69,11 +122,29 @@ func (m *Message) String() string {
 	if m.hasBackground {
 		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod+10, m.bg.r, m.bg.g, m.bg.b)
 	}
-	if m.underline {
+	if m.isUnderlined {
 		fmt.Fprintf(&b, "\u001B[4m")
 	}
+	if m.isDim {
+		fmt.Fprintf(&b, "\u001B[2m")
+	}
+	if m.isItalic {
+		fmt.Fprintf(&b, "\u001B[3m")
+	}
+	if m.isBold {
+		fmt.Fprintf(&b, "\u001B[1m")
+	}
 	fmt.Fprintf(&b, "%s", m.text)
-	if m.underline {
+	if m.isBold {
+		fmt.Fprintf(&b, "\u001B[21m")
+	}
+	if m.isItalic {
+		fmt.Fprintf(&b, "\u001B[23m")
+	}
+	if m.isDim {
+		fmt.Fprintf(&b, "\u001B[22m")
+	}
+	if m.isUnderlined {
 		fmt.Fprintf(&b, "\u001B[24m")
 	}
 	if m.hasBackground {
