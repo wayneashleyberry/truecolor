@@ -9,9 +9,6 @@ import (
 	"strings"
 )
 
-const closeFgColor = "\u001B[39m"
-const closeBgColor = "\u001B[49m"
-
 // Message holds the formatting options for printing
 type Message struct {
 	fg            color.RGBA
@@ -127,12 +124,11 @@ func (m *Message) Printf(format string, a ...interface{}) {
 // String will return the formatted text, with ansii excape codes, as a string
 func (m *Message) String() string {
 	var b strings.Builder
-	mod := 38
 	if m.hasForeground {
-		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod, m.fg.R, m.fg.G, m.fg.B)
+		fmt.Fprintf(&b, "\u001B[38;2;%d;%d;%dm", m.fg.R, m.fg.G, m.fg.B)
 	}
 	if m.hasBackground {
-		fmt.Fprintf(&b, "\u001B[%d;2;%d;%d;%dm", mod+10, m.bg.R, m.bg.G, m.bg.B)
+		fmt.Fprintf(&b, "\u001B[48;2;%d;%d;%dm", m.bg.R, m.bg.G, m.bg.B)
 	}
 	if m.isUnderlined {
 		fmt.Fprintf(&b, "\u001B[4m")
@@ -160,10 +156,10 @@ func (m *Message) String() string {
 		fmt.Fprintf(&b, "\u001B[24m")
 	}
 	if m.hasBackground {
-		fmt.Fprintf(&b, "%s", closeBgColor)
+		fmt.Fprintf(&b, "%s", "\u001B[49m")
 	}
 	if m.hasForeground {
-		fmt.Fprintf(&b, "%s", closeFgColor)
+		fmt.Fprintf(&b, "%s", "\u001B[39m")
 	}
 	return b.String()
 }
