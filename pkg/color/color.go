@@ -9,6 +9,7 @@ import (
 const closeFgColor = "\u001B[39m"
 const closeBgColor = "\u001B[49m"
 
+// Message holds the formatting options for printing
 type Message struct {
 	fg            color.RGBA
 	bg            color.RGBA
@@ -21,6 +22,7 @@ type Message struct {
 	isBold        bool
 }
 
+// Color sets the foreground color
 func Color(r, g, b uint8) *Message {
 	return &Message{
 		hasForeground: true,
@@ -33,6 +35,7 @@ func Color(r, g, b uint8) *Message {
 	}
 }
 
+// Background sets the background color
 func Background(r, g, b uint8) *Message {
 	return &Message{
 		hasBackground: true,
@@ -40,6 +43,7 @@ func Background(r, g, b uint8) *Message {
 	}
 }
 
+// White is an alias to Color(255, 255, 255)
 func White() *Message {
 	return &Message{
 		hasForeground: true,
@@ -47,6 +51,7 @@ func White() *Message {
 	}
 }
 
+// Black is an alias to Color(0, 0, 0)
 func Black() *Message {
 	return &Message{
 		hasForeground: true,
@@ -54,59 +59,63 @@ func Black() *Message {
 	}
 }
 
+// Color sets the foreground color
 func (m *Message) Color(r, g, b uint8) *Message {
 	m.hasForeground = true
 	m.fg = color.RGBA{r, g, b, 0}
 	return m
 }
 
+// Background sets the background color
 func (m *Message) Background(r, g, b uint8) *Message {
 	m.bg = color.RGBA{r, g, b, 0}
 	m.hasBackground = true
 	return m
 }
 
+// Underline will underline the text
 func (m *Message) Underline() *Message {
 	m.isUnderlined = true
 	return m
 }
 
+// Dim will dim the text
 func (m *Message) Dim() *Message {
 	m.isDim = true
 	return m
 }
 
+// Italic will format the text with italics
 func (m *Message) Italic() *Message {
 	m.isItalic = true
 	return m
 }
 
+// Bold will format the text in bold
 func (m *Message) Bold() *Message {
 	m.isBold = true
 	return m
 }
 
-func Text(text string) *Message {
-	return &Message{
-		text: text,
-	}
-}
-
+// Print will print the formatted text, like fmt.Print
 func (m *Message) Print(text string) {
 	m.text = text
 	fmt.Print(m)
 }
 
+// Println will print the formatted text, like fmt.Println
 func (m *Message) Println(text string) {
 	m.text = text
 	fmt.Println(m)
 }
 
+// Printf will print the formatted text, like fmt.Printf
 func (m *Message) Printf(format string, a ...interface{}) {
 	m.text = fmt.Sprintf(format, a...)
 	fmt.Print(m)
 }
 
+// String will return the formatted text, with ansii excape codes, as a string
 func (m *Message) String() string {
 	var b strings.Builder
 	mod := 38
