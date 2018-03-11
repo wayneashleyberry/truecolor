@@ -1,3 +1,5 @@
+// Package color provides methods for printing 24-bit truecolor in your terminal.
+// The API is inspired by https://github.com/chalk/chalk and https://github.com/fatih/color.
 package color
 
 import (
