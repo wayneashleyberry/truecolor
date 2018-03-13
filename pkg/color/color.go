@@ -35,6 +35,14 @@ func Color(r, g, b uint8) *Message {
 	}
 }
 
+// RGBA sets the foreground color
+func RGBA(fg color.RGBA) *Message {
+	return &Message{
+		hasForeground: true,
+		fg:            fg,
+	}
+}
+
 // Background sets the background color
 func Background(r, g, b uint8) *Message {
 	return &Message{
