@@ -1,6 +1,6 @@
 <img width="954" alt="Screenshot 2020-05-26 at 1 33 47 pm" src="https://user-images.githubusercontent.com/727262/82901224-90499780-9f55-11ea-8681-82a5ac8ebab3.png">
 
-[![GoDoc](https://godoc.org/github.com/wayneashleyberry/truecolor/pkg/color?status.svg)](https://godoc.org/github.com/wayneashleyberry/truecolor/pkg/color)
+[![Go Reference](https://pkg.go.dev/badge/github.com/wayneashleyberry/truecolor.svg)](https://pkg.go.dev/github.com/wayneashleyberry/truecolor)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wayneashleyberry/truecolor)](https://goreportcard.com/report/github.com/wayneashleyberry/truecolor)
 
 ### Usage
