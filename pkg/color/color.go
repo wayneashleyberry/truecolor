@@ -71,6 +71,7 @@ func Black() *Message {
 func (m *Message) Color(r, g, b uint8) *Message {
 	m.hasForeground = true
 	m.fg = color.RGBA{r, g, b, 0}
+
 	return m
 }
 
@@ -78,30 +79,35 @@ func (m *Message) Color(r, g, b uint8) *Message {
 func (m *Message) Background(r, g, b uint8) *Message {
 	m.bg = color.RGBA{r, g, b, 0}
 	m.hasBackground = true
+
 	return m
 }
 
 // Underline will underline the text
 func (m *Message) Underline() *Message {
 	m.isUnderlined = true
+
 	return m
 }
 
 // Dim will dim the text
 func (m *Message) Dim() *Message {
 	m.isDim = true
+
 	return m
 }
 
 // Italic will format the text with italics
 func (m *Message) Italic() *Message {
 	m.isItalic = true
+
 	return m
 }
 
 // Bold will format the text in bold
 func (m *Message) Bold() *Message {
 	m.isBold = true
+
 	return m
 }
 
@@ -114,6 +120,7 @@ func (m *Message) Print(text string) {
 // Sprint will print the formatted text, like fmt.Print
 func (m *Message) Sprint(a ...interface{}) string {
 	m.text = fmt.Sprint(a...)
+
 	return fmt.Sprint(m)
 }
 
@@ -132,6 +139,7 @@ func (m *Message) Printf(format string, a ...interface{}) {
 // String will return the formatted text, with ansii excape codes, as a string
 func (m *Message) String() string {
 	var open []string
+
 	var close []string
 
 	if m.hasForeground {
@@ -165,6 +173,7 @@ func (m *Message) String() string {
 	}
 
 	var b strings.Builder
+
 	fmt.Fprint(&b, strings.Join(open, ""))
 	fmt.Fprint(&b, m.text)
 	fmt.Fprint(&b, strings.Join(close, ""))
