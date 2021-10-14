@@ -10,7 +10,6 @@ package main
 
 import (
 	"fmt"
-	col "image/color"
 
 	"github.com/wayneashleyberry/truecolor/pkg/color"
 )
@@ -24,6 +23,5 @@ func main() {
 	color.White().Bold().Println("Hello, World!")
 	color.Color(255, 165, 00).Printf("Hello, %s!\n", "World")
 	fmt.Printf("Hello, %s\n", color.Color(255, 0, 0).Sprint("World", "!"))
-	color.RGBA(col.RGBA{100, 200, 10, 0}).Println("Hello, World!")
 }
 ```
