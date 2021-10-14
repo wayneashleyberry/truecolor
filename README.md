@@ -3,6 +3,8 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/wayneashleyberry/truecolor.svg)](https://pkg.go.dev/github.com/wayneashleyberry/truecolor)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wayneashleyberry/truecolor)](https://goreportcard.com/report/github.com/wayneashleyberry/truecolor)
 
+> Truecolor provides methods for printing 24-bit truecolor text in your terminal using Go. Not all terminals support 24-bit color, see https://git.io/vxe0J for more.
+
 ### Installation
 
 ```sh
